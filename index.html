@@ -24,6 +24,9 @@
             padding: 20px;
             z-index: 1200;
         }
+        .no-scroll {
+            overflow: hidden;
+        }
         .intro-card {
             width: 100%;
             max-width: 640px;
@@ -60,7 +63,7 @@
             transition: transform 0.25s ease;
         }
         .intro-envelope-button img {
-            width: 520px;
+            width: min(520px, 85vw);
             height: auto;
             display: block;
         }
@@ -148,10 +151,17 @@
             margin: 40px 0;
             font-size: 0.95em;
             line-height: 1.6;
+            gap: 10px;
         }
         .parents-section > div {
             flex: 1;
             padding: 0 10px;
+            display: grid;
+            grid-template-rows: auto auto auto;
+        }
+        .parents-section p {
+            margin: 6px 0;
+            min-height: 24px;
         }
         .parents-section h4 {
             font-size: 1.1em;
@@ -373,6 +383,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 10px;
         }
         .gallery-image {
             max-width: 90vw;
@@ -401,10 +412,10 @@
             justify-content: center;
         }
         .gallery-prev {
-            left: -52px;
+            left: 10px;
         }
         .gallery-next {
-            right: -52px;
+            right: 10px;
         }
         .gallery-close {
             position: absolute;
@@ -417,6 +428,29 @@
             color: #f1da96;
             cursor: pointer;
             font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .intro-label {
+                top: 10px;
+                font-size: 1.8em;
+            }
+            .intro-envelope {
+                padding: 10px;
+            }
+            .gallery-nav {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+            .gallery-prev {
+                left: 6px;
+            }
+            .gallery-next {
+                right: 6px;
+            }
+            .gallery-close {
+                top: -44px;
+            }
         }
         @keyframes qr-shake {
             0% { transform: translateX(0); }
@@ -482,7 +516,7 @@
                 <h4>Nhà Trai</h4>
                 <p>Ông: <strong>Trương Công Dân</strong></p>
                 <p>Bà: <strong>Nguyễn Thị Vĩnh Quí</strong></p>
-                <p>51 Nayder, Phường PleiKu,<br>Tỉnh Gia Lai</p>
+                <p>51 Nayder, PleiKu,<br>Tỉnh Gia Lai</p>
             </div>
             <div class="bride-side">
                 <h4>Nhà Gái</h4>
@@ -649,11 +683,13 @@
         showImage(index, 1);
         galleryOverlay.classList.add("active");
         galleryOverlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("no-scroll");
       };
 
       const closeGallery = () => {
         galleryOverlay.classList.remove("active");
         galleryOverlay.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("no-scroll");
       };
 
       albumImages.forEach((img, index) => {

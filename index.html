@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Cưới - Trương Phú Đông & Nguyễn Hoàng Ngọc Bích</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #6a0c10; /* Nền tối để nổi bật thiệp */
+            color: #FFEAC4;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+        }
+        .intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(139, 15, 20, 0.95), rgba(53, 7, 9, 0.98));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1200;
+        }
+        .intro-card {
+            width: 100%;
+            max-width: 640px;
+            padding: 0;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+        }
+        .intro-card.opening {
+            transform: scale(1.05);
+            opacity: 0;
+        }
+        .intro-envelope {
+            position: relative;
+            display: inline-block;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+        }
+        .intro-label {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2em;
+            color: #FFEAC4;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+        .intro-envelope-button {
+            border: none;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            transition: transform 0.25s ease;
+        }
+        .intro-envelope-button img {
+            width: 520px;
+            height: auto;
+            display: block;
+        }
+        .intro-envelope-button:hover {
+            transform: scale(1.08);
+        }
+        .intro-envelope-button:hover img {
+            animation: envelope-shake 0.5s ease-in-out 0.8s 1;
+        }
+        .intro-hidden {
+            display: none;
+        }
+        .main-hidden {
+            display: none;
+        }
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+            background-color: #6f0c11;
+            background-image: linear-gradient(rgba(255, 234, 196, 0.05), rgba(255, 234, 196, 0.05)), url('https://chungdoi.com/images/themes/red-v1/bg-main.webp');
+            background-blend-mode: screen;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .top-decor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .top-decor img {
+            width: 100px;
+            height: auto;
+        }
+        .top-decor .eng-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .main-names {
+            margin: 30px 0;
+        }
+        .main-names h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.8em;
+            margin: 10px 0;
+            line-height: 1.2;
+            color: #FFEAC4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .album-section {
+            margin: 40px 0;
+        }
+        .album-section h3 {
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .grid-album {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .grid-album img {
+            width: 100%;
+            border: 2px solid #f1da96;
+            border-radius: 5px;
+            object-fit: cover;
+            aspect-ratio: 1; /* Cắt ảnh thành hình vuông */
+            cursor: pointer;
+            transition: transform 0.25s ease;
+        }
+        .grid-album img:hover {
+            transform: scale(1.04);
+        }
+        .parents-section {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .parents-section > div {
+            flex: 1;
+            padding: 0 10px;
+        }
+        .parents-section h4 {
+            font-size: 1.1em;
+            border-bottom: 1px solid rgba(241, 218, 150, 0.5);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .couple-details {
+            margin: 40px 0;
+        }
+        .couple-details h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3em;
+            margin: 5px 0;
+        }
+        .couple-details .role {
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .ampersand {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+            margin: 15px 0;
+        }
+        .wedding-info {
+            margin: 50px 0;
+            padding: 30px 15px;
+            border-top: 1px dashed rgba(241, 218, 150, 0.6);
+            border-bottom: 1px dashed rgba(241, 218, 150, 0.6);
+        }
+        .wedding-info h2 {
+            font-size: 1.4em;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+        .time-box {
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        .time-box .big-time {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .location-box {
+            margin-top: 30px;
+        }
+        .location-box h4 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .map-embed {
+            width: 100%;
+            height: 260px;
+            border: 0;
+            border-radius: 10px;
+            margin-top: 16px;
+        }
+        .rsvp-button-row {
+            margin-top: 14px;
+        }
+        .btn-rsvp {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            width: 220px;
+            text-align: center;
+            background-color: #f1da96;
+            color: #8b0f14;
+            border: 1px solid #f1da96;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-rsvp:hover {
+            background-color: #8b0f14;
+            color: #f1da96;
+            border-color: #f1da96;
+        }
+        .rsvp-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 999;
+        }
+        .rsvp-overlay.active {
+            display: flex;
+        }
+        .rsvp-modal {
+            width: 100%;
+            max-width: 520px;
+            background: #8b0f14;
+            border: 2px solid #f1da96;
+            border-radius: 12px;
+            padding: 18px 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            text-align: left;
+        }
+        .rsvp-modal h3 {
+            margin: 0 0 12px;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.05em;
+        }
+        .rsvp-modal iframe {
+            width: 100%;
+            height: 70vh;
+            border: 0;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .rsvp-close {
+            display: block;
+            margin: 12px auto 0;
+            padding: 8px 18px;
+            border-radius: 18px;
+            border: 1px solid #f1da96;
+            background: transparent;
+            color: #f1da96;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .qr-section {
+            margin: 40px 0;
+        }
+        .qr-button {
+            border: none;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            margin: 16px 0 8px;
+            transition: transform 0.25s ease;
+            box-shadow: 0 0 12px rgba(241, 218, 150, 0.65);
+            border-radius: 18px;
+        }
+        .qr-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 16px rgba(241, 218, 150, 0.85);
+        }
+        .qr-button img {
+            width: 180px;
+            height: auto;
+            display: block;
+        }
+        .qr-button:hover img {
+            animation: qr-shake 0.5s ease-in-out 1s 1;
+        }
+        .qr-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+        .qr-overlay.active {
+            display: flex;
+        }
+        .qr-modal {
+            width: 100%;
+            max-width: 360px;
+            background: #8b0f14;
+            border: 2px solid #f1da96;
+            border-radius: 12px;
+            padding: 18px 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .qr-modal img {
+            width: 240px;
+            border: 3px solid #f1da96;
+            border-radius: 10px;
+        }
+        .qr-close {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 18px;
+            border-radius: 18px;
+            border: 1px solid #f1da96;
+            background: transparent;
+            color: #f1da96;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .gallery-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1100;
+        }
+        .gallery-overlay.active {
+            display: flex;
+        }
+        .gallery-modal {
+            position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-image {
+            max-width: 90vw;
+            max-height: 85vh;
+            border: 3px solid #f1da96;
+            border-radius: 10px;
+            background: #8b0f14;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #f1da96;
+            background: rgba(139, 15, 20, 0.85);
+            color: #f1da96;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-prev {
+            left: -52px;
+        }
+        .gallery-next {
+            right: -52px;
+        }
+        .gallery-close {
+            position: absolute;
+            top: -52px;
+            right: 0;
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid #f1da96;
+            background: rgba(139, 15, 20, 0.85);
+            color: #f1da96;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        @keyframes qr-shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-3px); }
+            40% { transform: translateX(3px); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes envelope-shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-4px); }
+            40% { transform: translateX(4px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
+            100% { transform: translateX(0); }
+        }
+        /* Ẩn audio */
+        .music-player {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-overlay" id="intro-overlay">
+        <div class="intro-label">Đ & B</div>
+        <div class="intro-card" id="intro-card">
+            <div class="intro-envelope">
+                <button class="intro-envelope-button" id="open-envelope">
+                    <img src="open-envelop.png" alt="Mở Thiệp">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-hidden" id="main-content">
+        <div class="top-decor">
+            <img src="https://chungdoi.com/images/themes/red-v1/rong.webp" alt="Dragon">
+            <span class="eng-text">Wedding<br>Invitation</span>
+            <img src="https://chungdoi.com/images/themes/red-v1/phuong.webp" alt="Phoenix">
+        </div>
+
+        <div class="main-names">
+            <h1>Phú Đông<br>&<br>Ngọc Bích</h1>
+        </div>
+
+        <div class="album-section">
+            <h3>Photo Album</h3>
+            <div class="grid-album" data-gallery="images/photo1.jpg, images/photo2.jpg, images/photo3.jpg, images/photo4.jpg, images/photo5.jpg, images/photo6.jpg, images/photo7.jpg, images/photo8.jpg, images/photo9.jpg, images/photo10.jpg">
+                <img src="images/photo1.jpg" alt="Ảnh Cưới 1">
+                <img src="images/photo2.jpg" alt="Ảnh Cưới 2">
+                <img src="images/photo3.jpg" alt="Ảnh Cưới 3">
+                <img src="images/photo4.jpg" alt="Ảnh Cưới 4">
+            </div>
+        </div>
+
+        <div class="parents-section">
+            <div class="groom-side">
+                <h4>Nhà Trai</h4>
+                <p>Ông: <strong>Trương Công Dân</strong></p>
+                <p>Bà: <strong>Nguyễn Thị Vĩnh Quí</strong></p>
+                <p>51 Nayder, Phường PleiKu,<br>Tỉnh Gia Lai</p>
+            </div>
+            <div class="bride-side">
+                <h4>Nhà Gái</h4>
+                <p>Ông: <strong>Nguyễn Minh Triều</strong></p>
+                <p>Bà: <strong>Hoàng Thị Như Hà</strong></p>
+                <p>Ấp Lý Lịch 1, Phú Lý,<br>Tỉnh Đồng Nai</p>
+            </div>
+        </div>
+
+        <div class="couple-details">
+            <h2>Trương Phú Đông</h2>
+            <div class="role">Chú Rể - Út Nam</div>
+            
+            <div class="ampersand">&</div>
+            
+            <h2>Nguyễn Hoàng Ngọc Bích</h2>
+            <div class="role">Cô Dâu - Trưởng Nữ</div>
+        </div>
+
+        <div class="wedding-info">
+            <h2>Thông Tin Tiệc Cưới</h2>
+            <p>Trân trọng kính mời quý khách đến dự buổi tiệc chung vui cùng gia đình chúng tôi.<br>Tiệc cưới sẽ diễn ra vào lúc:</p>
+            
+            <div class="time-box">
+                <div class="big-time">17:30</div>
+                <p>Chủ nhật | <strong>21 / 06 / 2026</strong></p>
+                <p style="font-size: 0.9em; opacity: 0.9;">Đón khách: 17h30 | Khai tiệc: 18h30</p>
+            </div>
+
+            <div class="location-box">
+                <h4>Sunny farm Coffee and BBQ</h4>
+                <p>173/1a Bình Lợi, Phường 13, Bình Lợi Trung,<br>Hồ Chí Minh 700000, Việt Nam</p>
+                <iframe class="map-embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Sunny%20farm%20Coffee%20and%20BBQ%20173%2F1a%20B%C3%ACnh%20L%E1%BB%A3i%2C%20Ph%C6%B0%E1%BB%9Dng%2013%2C%20B%C3%ACnh%20L%E1%BB%A3i%20Trung%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh%20700000%2C%20Vi%E1%BB%87t%20Nam&output=embed"></iframe>
+                <div class="rsvp-button-row">
+                    <button class="btn-rsvp" id="open-rsvp">Xác Nhận Tham Gia</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="qr-section">
+            <h2>Hộp quà mừng cưới</h2>
+            <p>Mã QR ngân hàng</p>
+            <button class="qr-button" id="open-qr">
+                <img src="red-envelop.png" alt="Mở QR">
+            </button>
+            <p style="font-style: italic; opacity: 0.9; margin-top: 15px;">Gia đình xin chân thành cảm ơn quý khách đã đến chung vui!</p>
+        </div>
+
+    </div>
+
+    <div class="rsvp-overlay" id="rsvp-overlay" aria-hidden="true">
+        <div class="rsvp-modal" role="dialog" aria-modal="true" aria-labelledby="rsvp-title">
+            <h3 id="rsvp-title">Xác Nhận Tham Gia</h3>
+            <iframe title="Google Form RSVP" src="https://docs.google.com/forms/d/e/1FAIpQLSdPVS57msourw7LppfVQXHPJIGYZ4q2LalXe6VnuoPs6vTenw/viewform?usp=dialog"></iframe>
+            <button type="button" class="rsvp-close" id="close-rsvp">Đóng</button>
+        </div>
+    </div>
+
+    <div class="qr-overlay" id="qr-overlay" aria-hidden="true">
+        <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qr-title">
+            <h3 id="qr-title">QR Mừng Cưới</h3>
+            <img src="qr.jpeg" alt="QR Code Mừng Cưới">
+            <button type="button" class="qr-close" id="close-qr">Đóng</button>
+        </div>
+    </div>
+
+    <div class="gallery-overlay" id="gallery-overlay" aria-hidden="true">
+        <div class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+            <button class="gallery-nav gallery-prev" id="gallery-prev">‹</button>
+            <img class="gallery-image" id="gallery-image" alt="Ảnh Cưới">
+            <button class="gallery-nav gallery-next" id="gallery-next">›</button>
+            <button class="gallery-close" id="gallery-close">Đóng</button>
+        </div>
+    </div>
+
+    <audio class="music-player" id="music-player" data-src="background-music.mp3" preload="auto" loop></audio>
+    <script>
+      const openBtn = document.getElementById("open-rsvp");
+      const overlay = document.getElementById("rsvp-overlay");
+      const closeBtn = document.getElementById("close-rsvp");
+      const introOverlay = document.getElementById("intro-overlay");
+      const introCard = document.getElementById("intro-card");
+      const openInvite = document.getElementById("open-envelope");
+      const mainContent = document.getElementById("main-content");
+      const musicPlayer = document.getElementById("music-player");
+      const qrOverlay = document.getElementById("qr-overlay");
+      const openQr = document.getElementById("open-qr");
+      const closeQr = document.getElementById("close-qr");
+      const galleryOverlay = document.getElementById("gallery-overlay");
+      const galleryImage = document.getElementById("gallery-image");
+      const galleryPrev = document.getElementById("gallery-prev");
+      const galleryNext = document.getElementById("gallery-next");
+      const galleryClose = document.getElementById("gallery-close");
+      const albumGrid = document.querySelector(".grid-album");
+      const albumImages = Array.from(document.querySelectorAll(".grid-album img"));
+      const gallerySources = (albumGrid?.getAttribute("data-gallery") || "")
+        .split(",")
+        .map((src) => src.trim())
+        .filter(Boolean);
+      const galleryList = gallerySources.length ? gallerySources : albumImages.map((img) => img.src);
+      let currentIndex = 0;
+
+      const openModal = () => {
+        overlay.classList.add("active");
+        overlay.setAttribute("aria-hidden", "false");
+      };
+
+      const closeModal = () => {
+        overlay.classList.remove("active");
+        overlay.setAttribute("aria-hidden", "true");
+      };
+
+      openBtn.addEventListener("click", openModal);
+      closeBtn.addEventListener("click", closeModal);
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+          closeModal();
+        }
+      });
+
+      const openQrModal = () => {
+        qrOverlay.classList.add("active");
+        qrOverlay.setAttribute("aria-hidden", "false");
+      };
+
+      const closeQrModal = () => {
+        qrOverlay.classList.remove("active");
+        qrOverlay.setAttribute("aria-hidden", "true");
+      };
+
+      openQr.addEventListener("click", openQrModal);
+      closeQr.addEventListener("click", closeQrModal);
+      qrOverlay.addEventListener("click", (event) => {
+        if (event.target === qrOverlay) {
+          closeQrModal();
+        }
+      });
+
+      const showImage = (index, direction = 1) => {
+        if (!galleryList.length) {
+          return;
+        }
+        const nextIndex = (index + galleryList.length) % galleryList.length;
+        const nextSrc = galleryList[nextIndex];
+        if (galleryImage.src === nextSrc) {
+          return;
+        }
+        currentIndex = nextIndex;
+        const offset = direction >= 0 ? 30 : -30;
+        galleryImage.style.transition = "none";
+        galleryImage.style.opacity = "0";
+        galleryImage.style.transform = `translateX(${offset}px)`;
+        galleryImage.addEventListener("load", () => {
+          requestAnimationFrame(() => {
+            galleryImage.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+            galleryImage.style.opacity = "1";
+            galleryImage.style.transform = "translateX(0)";
+          });
+        }, { once: true });
+        galleryImage.src = nextSrc;
+      };
+
+      const openGallery = (index) => {
+        showImage(index, 1);
+        galleryOverlay.classList.add("active");
+        galleryOverlay.setAttribute("aria-hidden", "false");
+      };
+
+      const closeGallery = () => {
+        galleryOverlay.classList.remove("active");
+        galleryOverlay.setAttribute("aria-hidden", "true");
+      };
+
+      albumImages.forEach((img, index) => {
+        img.addEventListener("click", () => {
+          const targetIndex = galleryList.indexOf(img.src);
+          openGallery(targetIndex >= 0 ? targetIndex : index);
+        });
+      });
+
+      galleryPrev.addEventListener("click", () => showImage(currentIndex - 1, -1));
+      galleryNext.addEventListener("click", () => showImage(currentIndex + 1, 1));
+      galleryClose.addEventListener("click", closeGallery);
+      galleryOverlay.addEventListener("click", (event) => {
+        if (event.target === galleryOverlay) {
+          closeGallery();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (!galleryOverlay.classList.contains("active")) {
+          return;
+        }
+        if (event.key === "ArrowLeft") {
+          showImage(currentIndex - 1, -1);
+        }
+        if (event.key === "ArrowRight") {
+          showImage(currentIndex + 1, 1);
+        }
+        if (event.key === "Escape") {
+          closeGallery();
+        }
+      });
+
+      let touchStartX = 0;
+      galleryImage.addEventListener("touchstart", (event) => {
+        touchStartX = event.touches[0].clientX;
+      });
+      galleryImage.addEventListener("touchend", (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+        if (Math.abs(deltaX) > 40) {
+          if (deltaX > 0) {
+            showImage(currentIndex - 1, -1);
+          } else {
+            showImage(currentIndex + 1, 1);
+          }
+        }
+      });
+
+      const startMusic = () => {
+        const dataSrc = musicPlayer.getAttribute("data-src");
+        if (dataSrc && !musicPlayer.getAttribute("src")) {
+          musicPlayer.setAttribute("src", dataSrc);
+        }
+        const seekTo = () => {
+          if (!Number.isNaN(musicPlayer.duration)) {
+            musicPlayer.currentTime = 58;
+          }
+        };
+        if (musicPlayer.readyState >= 1) {
+          seekTo();
+        } else {
+          musicPlayer.addEventListener("loadedmetadata", seekTo, { once: true });
+        }
+        musicPlayer.play().catch(() => {});
+      };
+
+      openInvite.addEventListener("click", () => {
+        openInvite.disabled = true;
+        introCard.classList.add("opening");
+        startMusic();
+        setTimeout(() => {
+          introOverlay.classList.add("intro-hidden");
+          mainContent.classList.remove("main-hidden");
+        }, 520);
+      });
+
+      document.addEventListener("click", () => {
+        startMusic();
+      }, { once: true });
+    </script>
+</body>
+</html>

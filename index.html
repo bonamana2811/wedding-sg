@@ -66,13 +66,10 @@
             width: min(520px, 85vw);
             height: auto;
             display: block;
-            animation: envelope-shake 1s ease-in-out 1s 1;
+            animation: envelope-shake 1s ease-in-out infinite;
         }
         .intro-envelope-button:hover {
             transform: scale(1.08);
-        }
-        .intro-envelope-button:hover img {
-            animation: envelope-shake 0.5s ease-in-out 0.8s 1;
         }
         .intro-hidden {
             display: none;
@@ -93,24 +90,54 @@
             position: relative;
             overflow: hidden;
         }
+        .hero-section {
+            position: relative;
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
         .top-decor {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
         }
         .top-decor img {
-            width: 100px;
+            position: absolute;
+            width: 230px;
             height: auto;
+            opacity: 0.38;
+            filter: brightness(1.15) contrast(1.2);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .top-decor .dragon-bg {
+            left: -30px;
+            top: -10px;
+        }
+        .top-decor .phoenix-bg {
+            right: -30px;
+            top: 10px;
         }
         .top-decor .eng-text {
             font-size: 1.1em;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 2;
         }
         .main-names {
-            margin: 30px 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
         }
         .main-names h1 {
             font-family: 'Great Vibes', cursive;
@@ -217,6 +244,71 @@
         .location-box h4 {
             font-size: 1.4em;
             margin-bottom: 10px;
+        }
+        .dresscode {
+            margin: 14px 0 10px;
+        }
+        .dresscode p {
+            margin: 0 0 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .dresscode-swatches {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .dresscode-swatch {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(241, 218, 150, 0.8);
+            display: inline-block;
+            cursor: pointer;
+            padding: 0;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .dresscode-swatch::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%);
+            background: rgba(20, 20, 20, 0.92);
+            color: #ffeac4;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        .dresscode-swatch:hover::after,
+        .dresscode-swatch:focus-visible::after,
+        .dresscode-swatch.active::after {
+            opacity: 1;
+        }
+        .swatch-black {
+            background: #111111;
+        }
+        .swatch-white {
+            background: #f7f4ea;
+        }
+        .swatch-brown {
+            background: #6b4423;
+        }
+        .swatch-beige {
+            background: #fcd2ac;
+        }
+        .swatch-beige-2 {
+            background: #fcd2ac;
+        }
+        .swatch-yellow {
+            background: #d9b650;
         }
         .map-embed {
             width: 100%;
@@ -438,6 +530,24 @@
             .intro-envelope {
                 padding: 10px;
             }
+            .hero-section {
+                min-height: 300px;
+            }
+            .top-decor img {
+                width: 180px;
+                opacity: 0.3;
+            }
+            .top-decor .dragon-bg {
+                left: -40px;
+                top: 10px;
+            }
+            .top-decor .phoenix-bg {
+                right: -40px;
+                top: 24px;
+            }
+            .main-names h1 {
+                font-size: 3.2em;
+            }
             .gallery-nav {
                 width: 36px;
                 height: 36px;
@@ -462,12 +572,11 @@
             100% { transform: translateX(0); }
         }
         @keyframes envelope-shake {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-4px); }
-            40% { transform: translateX(4px); }
-            60% { transform: translateX(-3px); }
-            80% { transform: translateX(3px); }
-            100% { transform: translateX(0); }
+            0%, 70%, 100% { transform: translateX(0); }
+            76% { transform: translateX(-4px); }
+            82% { transform: translateX(4px); }
+            88% { transform: translateX(-3px); }
+            94% { transform: translateX(3px); }
         }
         /* Ẩn audio */
         .music-player {
@@ -492,14 +601,16 @@
     </div>
 
     <div class="container main-hidden" id="main-content">
-        <div class="top-decor">
-            <img src="https://chungdoi.com/images/themes/red-v1/rong.webp" alt="Dragon">
-            <span class="eng-text">Wedding<br>Invitation</span>
-            <img src="https://chungdoi.com/images/themes/red-v1/phuong.webp" alt="Phoenix">
-        </div>
+        <div class="hero-section">
+            <div class="top-decor">
+                <img class="dragon-bg" src="https://chungdoi.com/images/themes/red-v1/rong.webp" alt="Dragon">
+                <span class="eng-text">Wedding<br>Invitation</span>
+                <img class="phoenix-bg" src="https://chungdoi.com/images/themes/red-v1/phuong.webp" alt="Phoenix">
+            </div>
 
-        <div class="main-names">
-            <h1>Phú Đông<br>&<br>Ngọc Bích</h1>
+            <div class="main-names">
+                <h1>Phú Đông<br>&<br>Ngọc Bích</h1>
+            </div>
         </div>
 
         <div class="album-section">
@@ -545,6 +656,17 @@
                 <div class="big-time">17:30</div>
                 <p>Chủ nhật | <strong>21 / 06 / 2026</strong></p>
                 <p style="font-size: 0.9em; opacity: 0.9;">Đón khách: 17h30 | Khai tiệc: 18h30</p>
+            </div>
+
+            <div class="dresscode">
+                <p>DressCode</p>
+                <div class="dresscode-swatches" aria-label="DressCode màu sắc">
+                        <button class="dresscode-swatch swatch-black" type="button" data-label="Đen" aria-label="Black"></button>
+                        <button class="dresscode-swatch swatch-white" type="button" data-label="Trắng" aria-label="White"></button>
+                        <button class="dresscode-swatch swatch-brown" type="button" data-label="Nâu" aria-label="Brown"></button>
+                        <button class="dresscode-swatch swatch-beige" type="button" data-label="Màu be" aria-label="Beige"></button>
+                        <button class="dresscode-swatch swatch-yellow" type="button" data-label="Vàng" aria-label="Yellow"></button>
+                </div>
             </div>
 
             <div class="location-box">
@@ -611,6 +733,7 @@
       const galleryPrev = document.getElementById("gallery-prev");
       const galleryNext = document.getElementById("gallery-next");
       const galleryClose = document.getElementById("gallery-close");
+      const dresscodeSwatches = Array.from(document.querySelectorAll(".dresscode-swatch"));
       const albumGrid = document.querySelector(".grid-album");
       const albumImages = Array.from(document.querySelectorAll(".grid-album img"));
       const gallerySources = (albumGrid?.getAttribute("data-gallery") || "")
@@ -698,6 +821,21 @@
           const targetIndex = galleryList.indexOf(img.src);
           openGallery(targetIndex >= 0 ? targetIndex : index);
         });
+      });
+
+      dresscodeSwatches.forEach((swatch) => {
+        swatch.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const isActive = swatch.classList.contains("active");
+          dresscodeSwatches.forEach((item) => item.classList.remove("active"));
+          if (!isActive) {
+            swatch.classList.add("active");
+          }
+        });
+      });
+
+      document.addEventListener("click", () => {
+        dresscodeSwatches.forEach((item) => item.classList.remove("active"));
       });
 
       galleryPrev.addEventListener("click", () => showImage(currentIndex - 1, -1));
